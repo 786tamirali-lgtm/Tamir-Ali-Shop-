@@ -1,0 +1,1270 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tamir Ali Marketplace - Shop</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --accent-color: #2ecc71;
+            --secondary-color: #3498db;
+            --warning-color: #f39c12;
+            --danger-color: #e74c3c;
+            --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            --card-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            --hover-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Nirmala UI', sans-serif;
+            background: var(--bg-gradient);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .shop-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Header Styles */
+        .shop-header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px 20px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: var(--card-shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .shop-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(to right, var(--accent-color), var(--secondary-color));
+        }
+
+        .shop-header h1 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .shop-header p {
+            font-size: 1.2rem;
+            color: #555;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .tagline {
+            background: linear-gradient(135deg, var(--accent-color), var(--secondary-color));
+            color: white;
+            padding: 8px 20px;
+            border-radius: 25px;
+            display: inline-block;
+            margin-top: 15px;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        /* Location Permission Alert */
+        .location-alert {
+            background: linear-gradient(135deg, #fff9c4, #ffeb3b);
+            border-left: 5px solid #ff9800;
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .location-alert i {
+            color: #ff9800;
+            font-size: 1.5rem;
+        }
+
+        .alert-text {
+            flex: 1;
+        }
+
+        .alert-text h4 {
+            margin-bottom: 5px;
+            color: #5d4037;
+        }
+
+        .alert-text p {
+            font-size: 0.95rem;
+            color: #6d4c41;
+        }
+
+        /* Admin Button */
+        .admin-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--primary-color);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            z-index: 100;
+            transition: all 0.3s;
+        }
+
+        .admin-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            background: #1a252f;
+        }
+
+        /* Backup Button */
+        .backup-btn {
+            position: fixed;
+            bottom: 90px;
+            right: 30px;
+            background: var(--warning-color);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            z-index: 100;
+            transition: all 0.3s;
+        }
+
+        .backup-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            background: #e67e22;
+        }
+
+        /* Stats Bar */
+        .stats-bar {
+            display: flex;
+            justify-content: space-around;
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 40px;
+            box-shadow: var(--card-shadow);
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .stat-item {
+            text-align: center;
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--accent-color);
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 1rem;
+        }
+
+        /* Update Alert */
+        .update-alert {
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            border: 2px dashed var(--secondary-color);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            display: none;
+            animation: slideDown 0.5s ease;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .update-alert h4 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .update-alert p {
+            color: #546e7a;
+            margin-bottom: 15px;
+        }
+
+        .update-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .update-btn {
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+
+        .update-btn.primary {
+            background: var(--secondary-color);
+            color: white;
+        }
+
+        .update-btn.secondary {
+            background: #e0e0e0;
+            color: #333;
+        }
+
+        .update-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Product Grid */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        /* Product Card Design */
+        .product-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--hover-shadow);
+        }
+
+        .product-image-container {
+            width: 100%;
+            height: 250px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .product-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .product-card:hover .product-image {
+            transform: scale(1.05);
+        }
+
+        .image-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.2);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .product-card:hover .image-overlay {
+            opacity: 1;
+        }
+
+        .product-info {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-name {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+            line-height: 1.4;
+            min-height: 3.6em;
+        }
+
+        .product-price {
+            font-size: 1.8rem;
+            color: var(--accent-color);
+            font-weight: bold;
+            margin: 15px 0;
+        }
+
+        .order-btn {
+            background: #25D366;
+            color: white;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1.1rem;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            text-decoration: none;
+            transition: all 0.3s;
+            margin-top: auto;
+        }
+
+        .order-btn:hover {
+            background: #128C7E;
+            transform: translateY(-2px);
+        }
+
+        .order-btn.location {
+            background: linear-gradient(135deg, #2196F3, #1976D2);
+        }
+
+        /* No Products Message */
+        .no-products {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 60px 30px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .no-products h3 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+        }
+
+        .no-products p {
+            color: #666;
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .add-product-btn {
+            background: var(--secondary-color);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 8px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .add-product-btn:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 30px;
+            margin-top: 40px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: var(--card-shadow);
+            color: #666;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .footer-link {
+            color: var(--secondary-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .footer-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Loading Animation */
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: var(--primary-color);
+        }
+
+        .loader {
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid var(--accent-color);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Location Loading Overlay */
+        .location-loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.8);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        .location-loading i {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: #25D366;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            background: var(--primary-color);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            z-index: 1000;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .toast.success { background: var(--accent-color); }
+        .toast.warning { background: var(--warning-color); }
+        .toast.error { background: var(--danger-color); }
+        .toast.info { background: var(--secondary-color); }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .shop-header h1 {
+                font-size: 2rem;
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .product-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                gap: 20px;
+            }
+
+            .stats-bar {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .stat-item {
+                width: 100%;
+                border-bottom: 1px solid #eee;
+                padding-bottom: 15px;
+            }
+
+            .stat-item:last-child {
+                border-bottom: none;
+                padding-bottom: 0;
+            }
+
+            .admin-btn {
+                bottom: 20px;
+                right: 20px;
+                padding: 12px 20px;
+                font-size: 0.9rem;
+            }
+
+            .backup-btn {
+                bottom: 70px;
+                right: 20px;
+                padding: 12px 20px;
+                font-size: 0.9rem;
+            }
+
+            .toast {
+                left: 20px;
+                right: 20px;
+                bottom: 80px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .product-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .shop-header h1 {
+                font-size: 1.8rem;
+            }
+
+            .product-name {
+                font-size: 1.2rem;
+            }
+
+            .product-price {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="shop-container">
+        <!-- Toast Notification -->
+        <div id="toast" class="toast">
+            <i class="fas fa-info-circle"></i>
+            <span id="toast-message">This is a toast message</span>
+        </div>
+
+        <!-- Location Permission Alert -->
+        <div class="location-alert" id="locationAlert">
+            <i class="fas fa-map-marker-alt"></i>
+            <div class="alert-text">
+                <h4>फास्ट डिलीवरी के लिए लोकेशन अनुमति</h4>
+                <p>ऑर्डर करते समय आपकी लोकेशन साझा की जाएगी ताकि आपको सटीक और तेज़ डिलीवरी मिल सके।</p>
+            </div>
+        </div>
+
+        <!-- Update Alert -->
+        <div class="update-alert" id="updateAlert">
+            <h4><i class="fas fa-sync-alt"></i> अपडेट उपलब्ध है!</h4>
+            <p>नई फीचर्स और सुधार उपलब्ध हैं। क्या आप अपने डेटा का बैकअप लेकर नए वर्जन में अपग्रेड करना चाहेंगे?</p>
+            <div class="update-buttons">
+                <button class="update-btn primary" onclick="backupAndUpdate()">
+                    <i class="fas fa-cloud-upload-alt"></i> बैकअप लें और अपडेट करें
+                </button>
+                <button class="update-btn secondary" onclick="dismissUpdate()">
+                    <i class="fas fa-times"></i> बाद में
+                </button>
+            </div>
+        </div>
+
+        <!-- Backup Button -->
+        <a href="#backup" class="backup-btn" onclick="openBackupPanel()">
+            <i class="fas fa-database"></i>
+            बैकअप
+        </a>
+
+        <!-- Admin Button -->
+        <a href="#admin-panel" class="admin-btn" onclick="openAdminPanel()">
+            <i class="fas fa-user-shield"></i>
+            एडमिन पैनल
+        </a>
+
+        <!-- Header -->
+        <div class="shop-header">
+            <h1>
+                <i class="fas fa-store"></i>
+                Tamir Ali Marketplace
+            </h1>
+            <p>अक्ल की जीत - बेहतरीन प्रोडक्ट्स, बेहतरीन दाम</p>
+            <div class="tagline">गुणवत्ता और विश्वसनीयता का एकमात्र स्थान</div>
+        </div>
+
+        <!-- Stats Bar -->
+        <div class="stats-bar">
+            <div class="stat-item">
+                <div class="stat-number" id="totalProducts">0</div>
+                <div class="stat-label">कुल प्रोडक्ट्स</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">₹<span id="totalValue">0</span></div>
+                <div class="stat-label">कुल मूल्य</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" id="lowestPrice">0</div>
+                <div class="stat-label">न्यूनतम कीमत</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" id="highestPrice">0</div>
+                <div class="stat-label">अधिकतम कीमत</div>
+            </div>
+        </div>
+
+        <!-- Products Grid -->
+        <div class="product-grid" id="productGrid">
+            <!-- Products will be loaded here dynamically -->
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>© 2024 Tamir Ali Marketplace. सर्वाधिकार सुरक्षित।</p>
+            <div class="footer-links">
+                <a href="#contact" class="footer-link">
+                    <i class="fas fa-phone-alt"></i> संपर्क करें
+                </a>
+                <a href="#terms" class="footer-link">
+                    <i class="fas fa-file-contract"></i> नियम और शर्तें
+                </a>
+                <a href="#privacy" class="footer-link">
+                    <i class="fas fa-shield-alt"></i> गोपनीयता नीति
+                </a>
+            </div>
+            <div style="margin-top: 20px; font-size: 0.9rem; color: #999;">
+                <p>App Version: <span id="appVersion">1.0.0</span> | Last Backup: <span id="lastBackup">कभी नहीं</span></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Location Loading Overlay -->
+    <div class="location-loading" id="locationLoading" style="display: none;">
+        <i class="fas fa-map-marker-alt"></i>
+        <p>आपकी लोकेशन प्राप्त की जा रही है...</p>
+        <p style="font-size: 0.9rem; margin-top: 10px; color: #ccc;">कृपया लोकेशन की अनुमति दें</p>
+    </div>
+
+    <!-- Backup Panel Modal -->
+    <div id="backupPanel" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.8); z-index:1000; justify-content:center; align-items:center; padding:20px;">
+        <div style="background:white; border-radius:15px; padding:30px; max-width:500px; width:100%; max-height:90vh; overflow-y:auto;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+                <h2 style="color:var(--primary-color);"><i class="fas fa-database"></i> बैकअप और रिस्टोर</h2>
+                <button onclick="closeBackupPanel()" style="background:none; border:none; font-size:1.5rem; cursor:pointer; color:#666;">×</button>
+            </div>
+            <div id="backupContent"></div>
+        </div>
+    </div>
+
+    <!-- Admin Panel Modal -->
+    <div id="adminPanel" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.8); z-index:1000; justify-content:center; align-items:center; padding:20px;">
+        <div style="background:white; border-radius:15px; padding:30px; max-width:500px; width:100%; max-height:90vh; overflow-y:auto;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+                <h2 style="color:var(--primary-color);"><i class="fas fa-user-shield"></i> एडमिन पैनल</h2>
+                <button onclick="closeAdminPanel()" style="background:none; border:none; font-size:1.5rem; cursor:pointer; color:#666;">×</button>
+            </div>
+            <div id="adminContent"></div>
+        </div>
+    </div>
+
+    <script>
+        // App Version Management
+        const CURRENT_VERSION = '1.2.0';
+        const LAST_VERSION_KEY = 'tamir_last_version';
+        const BACKUP_DATA_KEY = 'tamir_backup_data';
+        const LAST_BACKUP_KEY = 'tamir_last_backup';
+
+        // Toast Notification System
+        function showToast(message, type = 'info', duration = 3000) {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toast-message');
+            
+            toast.className = 'toast ' + type;
+            toastMessage.textContent = message;
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, duration);
+        }
+
+        // यह फंक्शन ग्राहक का करंट लोकेशन प्राप्त करेगा
+        function sendOrderWithLocation(productName, productPrice, productImage) {
+            // लोकेशन लोडिंग ओवरले दिखाएं
+            document.getElementById('locationLoading').style.display = 'flex';
+            
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    // लोकेशन लोडिंग ओवरले छुपाएं
+                    document.getElementById('locationLoading').style.display = 'none';
+                    
+                    const lat = position.coords.latitude;
+                    const lon = position.coords.longitude;
+                    const googleMapsLink = `https://www.google.com/maps?q=${lat},${lon}`;
+                    
+                    // व्हाट्सएप मैसेज तैयार करना
+                    let message = `नमस्ते तामीर अली मार्केटप्लेस!%0A%0A`;
+                    message += `*नया ऑर्डर प्राप्त हुआ*%0A`;
+                    message += `--------------------------%0A`;
+                    message += `*प्रोडक्ट:* ${productName}%0A`;
+                    message += `*कीमत:* ₹${productPrice}%0A`;
+                    message += `*फोटो:* ${productImage}%0A`;
+                    message += `--------------------------%0A`;
+                    message += `*ग्राहक की लोकेशन:* ${googleMapsLink}%0A%0A`;
+                    message += `कृपया इस ऑर्डर की पुष्टि करें।`;
+
+                    const whatsappURL = `https://wa.me/918797221991?text=${message}`;
+                    window.open(whatsappURL, '_blank');
+                }, function(error) {
+                    // लोकेशन लोडिंग ओवरले छुपाएं
+                    document.getElementById('locationLoading').style.display = 'none';
+                    
+                    // अगर ग्राहक लोकेशन की परमिशन न दे
+                    if(confirm("सटीक डिलीवरी के लिए लोकेशन की अनुमति बहुत जरूरी है। क्या आप फिर से कोशिश करना चाहेंगे?")) {
+                        // फिर से कोशिश करें
+                        sendOrderWithLocation(productName, productPrice, productImage);
+                        return;
+                    }
+                    
+                    // बिना लोकेशन के सामान्य मैसेज भेजें
+                    const message = `नमस्ते तामीर अली मार्केटप्लेस!%0A%0A`;
+                    message += `*नया ऑर्डर (बिना लोकेशन)*%0A`;
+                    message += `--------------------------%0A`;
+                    message += `*प्रोडक्ट:* ${productName}%0A`;
+                    message += `*कीमत:* ₹${productPrice}%0A`;
+                    message += `*फोटो:* ${productImage}%0A`;
+                    message += `--------------------------%0A`;
+                    message += `*नोट:* ग्राहक ने लोकेशन साझा नहीं की।%0A%0A`;
+                    message += `कृपया इस ऑर्डर की पुष्टि करें।`;
+                    
+                    window.open(`https://wa.me/918797221991?text=${message}`, '_blank');
+                }, {
+                    enableHighAccuracy: true,
+                    timeout: 10000,
+                    maximumAge: 0
+                });
+            } else {
+                // लोकेशन लोडिंग ओवरले छुपाएं
+                document.getElementById('locationLoading').style.display = 'none';
+                
+                // ब्राउज़र लोकेशन सपोर्ट नहीं करता
+                showToast("आपका ब्राउज़र लोकेशन सुविधा का समर्थन नहीं करता।", "warning");
+                
+                // बिना लोकेशन के सामान्य मैसेज भेजें
+                const message = `नमस्ते तामीर अली मार्केटप्लेस!%0A%0A`;
+                message += `*नया ऑर्डर*%0A`;
+                message += `--------------------------%0A`;
+                message += `*प्रोडक्ट:* ${productName}%0A`;
+                message += `*कीमत:* ₹${productPrice}%0A`;
+                message += `*फोटो:* ${productImage}%0A%0A`;
+                message += `कृपया इस ऑर्डर की पुष्टि करें।`;
+                
+                window.open(`https://wa.me/918797221991?text=${message}`, '_blank');
+            }
+        }
+
+        // सामान्य WhatsApp ऑर्डर फंक्शन (बिना लोकेशन)
+        function sendOrderWithoutLocation(productName, productPrice, productImage) {
+            const message = `नमस्ते तामीर अली मार्केटप्लेस!%0A%0A`;
+            message += `*नया ऑर्डर*%0A`;
+            message += `--------------------------%0A`;
+            message += `*प्रोडक्ट:* ${productName}%0A`;
+            message += `*कीमत:* ₹${productPrice}%0A`;
+            message += `*फोटो:* ${productImage}%0A%0A`;
+            message += `कृपया इस ऑर्डर की पुष्टि करें।`;
+            
+            window.open(`https://wa.me/918797221991?text=${message}`, '_blank');
+        }
+
+        // डेटा लोड करने का फंक्शन
+        function loadProducts() {
+            const grid = document.getElementById('productGrid');
+            
+            // Loading state दिखाएं
+            grid.innerHTML = `
+                <div class="loading">
+                    <div class="loader"></div>
+                    <p>प्रोडक्ट्स लोड हो रहे हैं...</p>
+                </div>
+            `;
+            
+            setTimeout(() => {
+                // localStorage से डेटा निकालना
+                const products = JSON.parse(localStorage.getItem('tamirProducts')) || [];
+
+                if (products.length === 0) {
+                    grid.innerHTML = `
+                        <div class="no-products">
+                            <h3><i class="fas fa-box-open"></i> कोई प्रोडक्ट नहीं मिला</h3>
+                            <p>अभी कोई प्रोडक्ट उपलब्ध नहीं है। एडमिन पैनल से नया प्रोडक्ट जोड़ें।</p>
+                            <a href="#" class="add-product-btn" onclick="openAdminPanel()">
+                                <i class="fas fa-plus-circle"></i>
+                                प्रोडक्ट जोड़ें
+                            </a>
+                        </div>
+                    `;
+                    updateStats(products);
+                    return;
+                }
+
+                grid.innerHTML = ''; // ग्रिड साफ करें
+
+                products.forEach((product, index) => {
+                    const card = document.createElement('div');
+                    card.className = 'product-card';
+                    
+                    card.innerHTML = `
+                        <div class="product-image-container">
+                            <img src="${product.image}" alt="${product.name}" class="product-image" 
+                                 onerror="this.src='https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=500&q=60&h=250'">
+                            <div class="image-overlay"></div>
+                        </div>
+                        <div class="product-info">
+                            <div class="product-name">${product.name}</div>
+                            <div class="product-price">₹${product.price}</div>
+                            <button class="order-btn location" onclick="sendOrderWithLocation('${product.name.replace(/'/g, "\\'")}', '${product.price}', '${product.image}')">
+                                <i class="fas fa-map-marker-alt"></i> लोकेशन के साथ ऑर्डर करें
+                            </button>
+                            <button class="order-btn" onclick="sendOrderWithoutLocation('${product.name.replace(/'/g, "\\'")}', '${product.price}', '${product.image}')" style="margin-top: 10px;">
+                                <i class="fab fa-whatsapp"></i> सामान्य ऑर्डर
+                            </button>
+                        </div>
+                    `;
+                    grid.appendChild(card);
+                });
+
+                updateStats(products);
+                
+                // Location Alert छुपाएं (5 सेकंड बाद)
+                setTimeout(() => {
+                    document.getElementById('locationAlert').style.display = 'none';
+                }, 5000);
+                
+                // Update check करें
+                checkForUpdates();
+                
+            }, 500); // लोडिंग एनिमेशन के लिए थोड़ी देरी
+        }
+
+        // स्टैटिस्टिक्स अपडेट करने का फंक्शन
+        function updateStats(products) {
+            const totalProducts = products.length;
+            const totalValue = products.reduce((sum, product) => sum + Number(product.price), 0);
+            const prices = products.map(p => Number(p.price));
+            const lowestPrice = prices.length > 0 ? Math.min(...prices) : 0;
+            const highestPrice = prices.length > 0 ? Math.max(...prices) : 0;
+
+            document.getElementById('totalProducts').textContent = totalProducts;
+            document.getElementById('totalValue').textContent = totalValue;
+            document.getElementById('lowestPrice').textContent = `₹${lowestPrice}`;
+            document.getElementById('highestPrice').textContent = `₹${highestPrice}`;
+        }
+
+        // BACKUP FUNCTIONS
+        function openBackupPanel() {
+            const products = JSON.parse(localStorage.getItem('tamirProducts')) || [];
+            const backupData = JSON.parse(localStorage.getItem(BACKUP_DATA_KEY)) || [];
+            const lastBackup = localStorage.getItem(LAST_BACKUP_KEY) || 'कभी नहीं';
+            
+            let backupHTML = `
+                <h3 style="color: var(--primary-color); margin-bottom: 20px;">
+                    <i class="fas fa-history"></i> बैकअप इतिहास
+                </h3>
+                <p style="color: #666; margin-bottom: 15px;">आखिरी बैकअप: <strong>${lastBackup}</strong></p>
+                <p style="color: #666; margin-bottom: 20px;">कुल बैकअप: <strong>${backupData.length}</strong></p>
+                
+                <div style="display: flex; flex-direction: column; gap: 15px; margin-bottom: 25px;">
+                    <button onclick="createBackup()" style="background: var(--accent-color); color: white; padding: 15px; border: none; border-radius: 10px; cursor: pointer; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 10px;">
+                        <i class="fas fa-save"></i> नया बैकअप बनाएं
+                    </button>
+                    
+                    <button onclick="exportBackup()" style="background: var(--secondary-color); color: white; padding: 15px; border: none; border-radius: 10px; cursor: pointer; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 10px;">
+                        <i class="fas fa-download"></i> बैकअप डाउनलोड करें
+                    </button>
+                </div>
+            `;
+            
+            if (backupData.length > 0) {
+                backupHTML += `
+                    <h4 style="color: var(--primary-color); margin-bottom: 15px; margin-top: 25px;">
+                        <i class="fas fa-database"></i> पिछले बैकअप
+                    </h4>
+                    <div style="max-height: 200px; overflow-y: auto; margin-bottom: 20px;">
+                `;
+                
+                backupData.forEach((backup, index) => {
+                    const backupDate = new Date(backup.timestamp).toLocaleString('hi-IN');
+                    backupHTML += `
+                        <div style="background: #f8f9fa; padding: 12px; margin-bottom: 10px; border-radius: 8px; border-left: 4px solid var(--warning-color);">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <div>
+                                    <strong>बैकअप #${index + 1}</strong><br>
+                                    <small>${backupDate}</small><br>
+                                    <small>${backup.products.length} प्रोडक्ट्स</small>
+                                </div>
+                                <div>
+                                    <button onclick="restoreBackup(${index})" style="background: var(--accent-color); color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; margin-right: 5px;">
+                                        <i class="fas fa-redo"></i>
+                                    </button>
+                                    <button onclick="deleteBackup(${index})" style="background: var(--danger-color); color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer;">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                backupHTML += `</div>`;
+            }
+            
+            document.getElementById('backupContent').innerHTML = backupHTML;
+            document.getElementById('backupPanel').style.display = 'flex';
+        }
+
+        function closeBackupPanel() {
+            document.getElementById('backupPanel').style.display = 'none';
+        }
+
+        function createBackup() {
+            const products = JSON.parse(localStorage.getItem('tamirProducts')) || [];
+            
+            if (products.length === 0) {
+                showToast("बैकअप के लिए कोई प्रोडक्ट नहीं है!", "warning");
+                return;
+            }
+            
+            const backupData = JSON.parse(localStorage.getItem(BACKUP_DATA_KEY)) || [];
+            const timestamp = new Date().toISOString();
+            
+            const newBackup = {
+                timestamp: timestamp,
+                products: [...products],
+                version: CURRENT_VERSION
+            };
+            
+            backupData.push(newBackup);
+            
+            // सिर्फ पिछले 10 बैकअप ही रखें
+            if (backupData.length > 10) {
+                backupData.shift();
+            }
+            
+            localStorage.setItem(BACKUP_DATA_KEY, JSON.stringify(backupData));
+            localStorage.setItem(LAST_BACKUP_KEY, new Date().toLocaleString('hi-IN'));
+            
+            showToast(`बैकअप सफलतापूर्वक बनाया गया! (${products.length} प्रोडक्ट्स)`, "success");
+            
+            // UI अपडेट करें
+            updateLastBackupDisplay();
+            openBackupPanel();
+        }
+
+        function exportBackup() {
+            const products = JSON.parse(localStorage.getItem('tamirProducts')) || [];
+            
+            if (products.length === 0) {
+                showToast("निर्यात के लिए कोई डेटा नहीं है!", "warning");
+                return;
+            }
+            
+            const backup = {
+                timestamp: new Date().toISOString(),
+                products: products,
+                version: CURRENT_VERSION,
+                type: "Tamir Ali Marketplace Backup"
+            };
+            
+            const dataStr = JSON.stringify(backup, null, 2);
+            const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+            
+            const exportFileDefaultName = `tamir-backup-${new Date().toISOString().split('T')[0]}.json`;
+            
+            const linkElement = document.createElement('a');
+            linkElement.setAttribute('href', dataUri);
+            linkElement.setAttribute('download', exportFileDefaultName);
+            linkElement.click();
+            
+            showToast(`बैकअप डाउनलोड किया गया! (${products.length} प्रोडक्ट्स)`, "success");
+        }
+
+        function restoreBackup(index) {
+            const backupData = JSON.parse(localStorage.getItem(BACKUP_DATA_KEY)) || [];
+            
+            if (!backupData[index]) {
+                showToast("बैकअप नहीं मिला!", "error");
+                return;
+            }
+            
+            if (confirm("क्या आप वाकई इस बैकअप को रिस्टोर करना चाहते हैं? वर्तमान डेटा खो सकता है।")) {
+                const backup = backupData[index];
+                localStorage.setItem('tamirProducts', JSON.stringify(backup.products));
+                
+                showToast(`बैकअप रिस्टोर किया गया! (${backup.products.length} प्रोडक्ट्स)`, "success");
+                
+                closeBackupPanel();
+                loadProducts();
+            }
+        }
+
+        function deleteBackup(index) {
+            const backupData = JSON.parse(localStorage.getItem(BACKUP_DATA_KEY)) || [];
+            
+            if (!backupData[index]) {
+                showToast("बैकअप नहीं मिला!", "error");
+                return;
+            }
+            
+            if (confirm("क्या आप वाकई इस बैकअप को हटाना चाहते हैं?")) {
+                backupData.splice(index, 1);
+                localStorage.setItem(BACKUP_DATA_KEY, JSON.stringify(backupData));
+                
+                showToast("बैकअप हटा दिया गया!", "success");
+                openBackupPanel();
+            }
+        }
+
+        function updateLastBackupDisplay() {
+            const lastBackup = localStorage.getItem(LAST_BACKUP_KEY) || 'कभी नहीं';
+            document.getElementById('lastBackup').textContent = lastBackup;
+        }
+
+        // UPDATE FUNCTIONS
+        function checkForUpdates() {
+            const lastVersion = localStorage.getItem(LAST_VERSION_KEY);
+            
+            // App version display update
+            document.getElementById('appVersion').textContent = CURRENT_VERSION;
+            updateLastBackupDisplay();
+            
+            // अगर यह पहली बार चल रहा है या नया वर्जन है
+            if (!lastVersion || lastVersion !== CURRENT_VERSION) {
+                // Auto-backup on version change
+                const products = JSON.parse(localStorage.getItem('tamirProducts')) || [];
+                if (products.length > 0 && lastVersion) {
+                    createBackup();
+                    showToast(`नए वर्जन ${CURRENT_VERSION} के लिए ऑटो बैकअप बनाया गया`, "info");
+                }
+                
+                localStorage.setItem(LAST_VERSION_KEY, CURRENT_VERSION);
+                
+                // Show update alert for major version changes
+                if (lastVersion && shouldShowUpdateAlert(lastVersion, CURRENT_VERSION)) {
+                    setTimeout(() => {
+                        document.getElementById('updateAlert').style.display = 'block';
+                    }, 2000);
+                }
+            }
+        }
+
+        function shouldShowUpdateAlert(oldVersion, newVersion) {
+            // Major version change (1.x.x -> 2.x.x)
+            const oldMajor = parseInt(oldVersion.split('.')[0]);
+            const newMajor = parseInt(newVersion.split('.')[0]);
+            
+            return newMajor > oldMajor;
+        }
+
+        function backupAndUpdate() {
+            // बैकअप बनाएं
+            createBackup();
+            
+            // Update process
+            document.getElementById('updateAlert').innerHTML = `
+                <h4><i class="fas fa-sync-alt fa-spin"></i> अपडेट हो रहा है...</h4>
+                <p>कृपया प्रतीक्षा करें, आपका डेटा संरक्षित किया जा रहा है...</p>
+                <div style="background: #f5f5f5; padding: 10px; border-radius: 5px; margin-top: 15px;">
+                    <div id="updateProgress" style="height: 5px; background: var(--accent-color); width: 0%; border-radius: 3px; transition: width 1s;"></div>
+                </div>
+            `;
+            
+            // Simulate update process
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += 20;
+                document.getElementById('updateProgress').style.width = progress + '%';
+                
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    
+                    // Update complete
+                    document.getElementById('updateAlert').innerHTML = `
+                        <h4><i class="fas fa-check-circle" style="color: var(--accent-color);"></i> अपडेट पूरा हुआ!</h4>
+                        <p>आपका Tamir Ali Marketplace v${CURRENT_VERSION} में सफलतापूर्वक अपडेट हो गया है।</p>
+                        <div style="background: #e8f5e9; padding: 15px; border-radius: 8px; margin-top: 15px;">
+                            <h5 style="color: var(--accent-color); margin-bottom: 10px;">नई फीचर्स:</h5>
+                            <ul style="color: #546e7a; padding-left: 20px;">
+                                <li>बैकअप और रिस्टोर सिस्टम</li>
+                                <li>ऑटो अपडेट नोटिफिकेशन</li>
+                                <li>बेहतर प्रदर्शन</li>
+                                <li>व्हाट्सएप मैसेज टेम्पलेट में सुधार</li>
+                            </ul>
+                        </div>
+                        <button onclick="dismissUpdate()" style="background: var(--accent-color); color: white; padding: 12px 24px; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; margin-top: 20px; width: 100%;">
+                            <i class="fas fa-check"></i> समझ गया
+                        </button>
+                    `;
+                    
+                    // Refresh the page to apply updates
+                    setTimeout(() => {
+                        location.reload();
+                    }, 3000);
+                }
+            }, 300);
+        }
+
+        function dismissUpdate() {
+            document.getElementById('updateAlert').style.display = 'none';
+        }
+
+        // एडमिन पैनल खोलने का फंक्शन
+        function openAdminPanel() {
+            const products = JSON.parse(localStorage.getItem('tamirProducts')) || [];
+            let adminHTML = '';
+            
+            if (products.length > 0) {
+                adminHTML = `
+                    <h3 style="margin-bottom: 15px; color: var(--primary-color);">मौजूदा प्रोडक्ट्स:</h3>
+                    <div style="max-height: 300px; overflow-y: auto; margin-bottom: 20px;">
+                        ${products.map((product, index) => `
+                            <div style="background: #f8f9fa; padding: 15px; margin-bottom: 10px; border-radius: 8px; border-left: 4px solid var(--accent-color);">
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <div>
+                                        <strong>${product.name}</strong><br>
+                                        <small>कीमत: ₹${product.price}</small>
+                                    </div>
+                                    <button onclick="deleteProduct(${index})" style="background: #e74c3c; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer;">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            } else {
+                adminHTML = `
+                    <div style="text-align: center; padding: 20px;">
+                        <p style="color: #666;">कोई प्रोडक्ट नहीं है</p>
+                    </div>
+                `;
+            }
+            
+            adminHTML += `
+                <div style="margin-top: 30px; border-top: 2px solid #eee; padding-top: 20px;">
+                    <h3 style="margin-bottom: 15px; color: var(--primary-color);">नया प्रोडक्ट जोड़ें:</h3>
+                    <div style="display: flex; gap: 10px;">
+                        <a href="add-product.html" style="flex: 1; background: var(--accent-color); color: white; padding: 12px; text-align: center; border-radius: 8px; text-decoration: none; font-weight: 600;">
+                            <i class="fas fa-plus"></i> प्रोडक्ट जोड़ें
+                        </a>
+                        <button onclick="clearAllProducts()" style="flex: 1; background: #e74c3c; color: white; border: none; padding: 12px; border-radius: 8px; cursor: pointer; font-weight: 600;">
+                            <i class="fas fa-trash"></i> सभी हटाएं
+                        </button>
+                    </div>
+                    <p style="margin-top: 15px; color: #666; font-size: 0.9rem;">
+                        <i class="fas fa-info-circle"></i> प्रोडक्ट जोड़ने के लिए नया पेज खुलेगा
+                    </p>
+                </div>
+            `;
+            
+            document.getElementById('adminContent').innerHTML = adminHTML;
+            document.getElementById('adminPanel').style.display = 'flex';
+        }
+
+        // एडमिन पैनल बंद करने का फंक्शन
+        function closeAdminPanel() {
+            document.getElementById('adminPanel').style.display = 'none';
+        }
+
+        // प्रोडक्ट डिलीट करने का फंक्शन
+        function deleteProduct(index) {
+            const products = JSON.parse(localStorage.getItem('tamirProducts')) || [];
+            products.splice(index, 1);
+            localStorage.setItem('tamirProducts', JSON.stringify(products));
+            
+            // रीफ्रेश करें
+            openAdminPanel();
+            loadProducts();
+            
+            showToast('प्रोडक्ट सफलतापूर्वक हटा दिया गया!', 'success');
+        }
+
+        // सभी प्रोडक्ट्स डिलीट करने का फंक्शन
+        function clearAllProducts() {
+            if (confirm('क्या आप सभी प्रोडक्ट्स हटाना चाहते हैं? यह क्रिया वापस नहीं की जा सकती।')) {
+                localStorage.removeItem('tamirProducts');
+                closeAdminPanel();
+                loadProducts();
+                showToast('सभी प्रोडक्ट्स सफलतापूर्वक हटा दिए गए!', 'success');
+            }
+        }
+
+        // पेज लोड होते ही फंक्शन चलाएं
+        window.onload = loadProducts;
+
+        // बैकग्राउंड में डेटा चेक करते रहें
+        setInterval(() => {
+            loadProducts();
+        }, 30000); // हर 30 सेकंड में चेक करें
+    </script>
+</body>
+</html>
